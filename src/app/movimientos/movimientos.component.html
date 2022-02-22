@@ -1,0 +1,136 @@
+<form [formGroup]="formMovimiento" class="form">
+
+<div>
+<div class="align-items-column">
+  <div class="align-item-row">
+    <div style="margin: 32px;">
+
+        <mat-form-field appearance="outline" class="width-91">
+            <mat-label>Articulo</mat-label>
+            <mat-select matNativeControl formControlName="cod_mercancia">
+              <mat-option
+                *ngFor="let item of DATARTICULO"
+                [value]="item"
+                style="padding: 10px"
+                >{{item.nombreProducto}}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+        <mat-form-field style="width: 100%;">
+            <mat-label>Proceso</mat-label>
+            <mat-select [(ngModel)]="proceso" formControlName="proceso">
+              <!-- <option value="" selected></option> -->
+              <mat-option value="venta">Salida de almacen</mat-option>
+              <mat-option value="garantia">Entrada a almacen</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Almacen</mat-label>
+            <mat-select formControlName="almacen">
+              <!-- <option value="" selected></option> -->
+              <mat-option value="principal">Bodega Principal</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="width: 50%;" *ngIf="proceso === 'venta'">
+            <mat-label>Concepto</mat-label>
+            <mat-select formControlName="concepto">
+              <!-- <option value="" selected></option> -->
+              <mat-option value="Salida del almacen por venta">Salida por facturacion</mat-option>
+              <mat-option value="Entrada al almacen por garantia">Ajuste de inventario</mat-option>
+              <mat-option value="Entrada al almacen por garantia">Traslados</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 50%;" *ngIf="proceso === 'garantia'">
+            <mat-label>Concepto</mat-label>
+            <mat-select formControlName="concepto">
+              <!-- <option value="" selected></option> -->
+              <mat-option value="Entrada al almacen por garantia">Ajuste de inventario</mat-option>
+              <mat-option value="Entrada al almacen por garantia">Traslados</mat-option>
+              <mat-option value="Entrada al almacen por garantia">Devoluciones</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 49%; margin-left: 8px">
+            <mat-label>Proveedor</mat-label>
+            <input matInput placeholder="Escriba el proveedor" formControlName="proveedor">
+          </mat-form-field>
+
+          <mat-form-field style="width: 100%;">
+            <mat-label>Observación</mat-label>
+            <input matInput placeholder="Escriba la descripción del movimiento" formControlName="observacion">
+          </mat-form-field>
+          <mat-form-field style="width: 100%;">
+            <mat-label>Cantidad</mat-label>
+            <input matInput placeholder="Escriba la cantidad" formControlName="cantidad_vendida"/>
+          </mat-form-field>
+          <!-- <button mat-flat-button color="primary">Primary</button> -->
+      <button class="background-green button" (click)="guardarMovimiento()">
+        Guardar movimiento
+      </button>
+      <button class="background-red button" (click)="limpiar()">Limpiar</button>
+    </div>
+  </div>
+
+
+
+<div>
+    <table mat-table [dataSource]="dataSource" class="table">
+
+      <ng-container matColumnDef="codMercancia">
+        <th mat-header-cell *matHeaderCellDef> Codigo de Mercancia </th>
+        <td mat-cell *matCellDef="let element"> {{element.codMercancia}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="fechaIngreso">
+        <th mat-header-cell *matHeaderCellDef> Fecha de movimiento </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaIngreso}} </td>
+      </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="observacion">
+          <th mat-header-cell *matHeaderCellDef> Observacion </th>
+          <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="proceso">
+            <th mat-header-cell *matHeaderCellDef> Proceso </th>
+            <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+        <ng-container matColumnDef="almacen">
+            <th mat-header-cell *matHeaderCellDef> Almacen </th>
+            <td mat-cell *matCellDef="let element"> {{element.almacen}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+        <ng-container matColumnDef="concepto">
+            <th mat-header-cell *matHeaderCellDef> Concepto </th>
+            <td mat-cell *matCellDef="let element"> {{element.concepto}} </td>
+          </ng-container>
+              <!-- Name Column -->
+        <ng-container matColumnDef="proveedor">
+            <th mat-header-cell *matHeaderCellDef> Concepto </th>
+            <td mat-cell *matCellDef="let element"> {{element.proveedor}} </td>
+          </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <div (click)="eliminarMercancia(element)">
+             <img style="background: black;" src="./assets/icon-delete-color-white.png">
+          </div>
+        </td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlightRow': selectedRow == row}"
+      (click)="highlight(row)"
+      ></tr>
+    </table>
+   </div> 
+</div>

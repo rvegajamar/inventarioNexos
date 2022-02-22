@@ -1,0 +1,29 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+
+    <div class="item" (click)="variable = 1"> 
+      <span>Usuario</span>
+      <img src="./assets/icon-arrow-dark.png">
+    </div>
+    <div class="item" (click)="variable = 2">
+      <span>Cargo</span>
+      <img src="./assets/icon-arrow-dark.png">
+    </div>
+    <div class="item" (click)="variable = 3"> 
+      <span>Mercancia</span>
+      <img src="./assets/icon-arrow-dark.png">
+    </div>
+    <div class="item" (click)="variable = 4">
+      <span>Movimientos</span>
+      <img src="./assets/icon-arrow-dark.png">
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+
+    <app-usuario *ngIf="variable == 1"></app-usuario>
+    <app-cargo *ngIf="variable == 2"></app-cargo>
+    <app-mercancia *ngIf="variable == 3"></app-mercancia>
+    <app-movimientos *ngIf="variable == 4"></app-movimientos>
+    
+  </mat-drawer-content>
+</mat-drawer-container>
